@@ -1,11 +1,7 @@
+// src/main/main.cpp
 #include "lib.hpp"
 
-// ! macro to mark variables as unused
-#define UNUSED(x) ((void)(x))
-
-int main(int argc, char *argv[]) {
-  UNUSED(argc);
-  UNUSED(argv);
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
 
   PrintHelloWorld printer;
   printer.print_hello_world();

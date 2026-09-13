@@ -11,25 +11,33 @@ set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(${PROJECT_NAME}
-    src/main/main.cpp
-    # src/other_module.cpp
+add_library(xdf_core 
+    src/main/lib.cpp
 )
 
-# ! wire up the include
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(xdf_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# ! strict compiler warnings
+add_executable(${PROJECT_NAME} 
+    src/main/main.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE xdf_core)
+
+set(STRICT_WARNINGS "")
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    target_compile_options(${PROJECT_NAME} PRIVATE 
-        /W4 /WX /permissive-
-    )
+    list(APPEND STRICT_WARNINGS /W4 /WX /permissive-)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        -Wall -Wextra -Wpedantic
-        -Wconversion -Wshadow -Werror
-    )
+    list(APPEND STRICT_WARNINGS -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror)
 endif()
+
+target_compile_options(xdf_core PRIVATE ${STRICT_WARNINGS})
+target_compile_options(${PROJECT_NAME} PRIVATE ${STRICT_WARNINGS})
+
+# add_executable(${PROJECT_NAME}
+#     src/main/main.cpp
+#     src/main/lib.cpp
+#     # src/other_module.cpp
+# )
 
 
 ###############################################################################

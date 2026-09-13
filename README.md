@@ -5,6 +5,7 @@ libXDF is a simple library for XDF (extensible data format) extensible storage f
 
 ```sh
 #! TODO make a library, instead of executable
+mkdir build/
 cd build/
 cmake --build .
 ./libxdf

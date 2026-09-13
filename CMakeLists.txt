@@ -33,6 +33,19 @@ endif()
 target_compile_options(xdf_core PRIVATE ${STRICT_WARNINGS})
 target_compile_options(${PROJECT_NAME} PRIVATE ${STRICT_WARNINGS})
 
+# ! TESTING
+enable_testing()
+
+add_executable(xdf_test 
+    src/test/test_main.cpp
+)
+
+target_link_libraries(xdf_test PRIVATE xdf_core)
+target_compile_options(xdf_test PRIVATE ${STRICT_WARNINGS})
+
+add_test(NAME CoreLibraryTest COMMAND xdf_test)
+
+
 # add_executable(${PROJECT_NAME}
 #     src/main/main.cpp
 #     src/main/lib.cpp
